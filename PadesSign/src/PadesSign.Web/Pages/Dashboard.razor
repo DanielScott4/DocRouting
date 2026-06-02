@@ -1,0 +1,32 @@
+﻿@page "/"
+@inject SigningApiClient Api
+
+<h1>My documents</h1>
+
+@if (_envelopes is null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <table>
+        <thead><tr><th>File</th><th>Status</th><th>Created</th><th></th></tr></thead>
+        <tbody>
+        @foreach (var e in _envelopes)
+        {
+            <tr>
+                <td>@e.OriginalFileName</td>
+                <td>@e.Status</td>
+                <td>@e.CreatedAt.ToShortDateString()</td>
+                <td><a href="/sign/@e.Id">View / Sign</a></td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<EnvelopeDto>? _envelopes;
+    protected override async Task OnInitializedAsync()
+        => _envelopes = await Api.ListEnvelopesAsync() ?? new();
+}

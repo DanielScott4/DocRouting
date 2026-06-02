@@ -1,0 +1,78 @@
+﻿@page "/sign/{EnvelopeId:guid}"
+@inject SigningApiClient   Api
+@inject SignalRService     Hub
+@inject IJSRuntime         JS
+@inject NavigationManager  Nav
+
+<h1>Sign document</h1>
+
+@if (_envelope is null)
+{
+    <p>Loadingâ€¦</p>
+}
+else
+{
+    <p>Status: <strong>@_envelope.Status</strong></p>
+
+    <!-- PDF.js viewer; signature field overlays are positioned by JS -->
+    <div id="pdf-container" style="position:relative;width:100%;min-height:800px;">
+        <canvas id="pdf-canvas"></canvas>
+
+        @if (_canSign)
+        {
+            <div class="sign-overlay" @onclick="StartSigning">
+                <span>Click to sign with smartcard</span>
+            </div>
+        }
+    </div>
+
+    @if (_status != string.Empty) { <p>@_status</p> }
+}
+
+@code {
+    [Parameter] public Guid EnvelopeId { get; set; }
+
+    private EnvelopeDto? _envelope;
+    private bool         _canSign;
+    private string       _status = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _envelope = await Api.GetEnvelopeAsync(EnvelopeId);
+        _canSign  = _envelope?.Status == "InProgress";
+
+        await Hub.ConnectAsync(Nav.BaseUri);
+        await Hub.JoinEnvelopeAsync(EnvelopeId);
+        Hub.StepSigned    += _ => { _envelope = null; InvokeAsync(OnInitializedAsync); };
+        Hub.StatusChanged += s => { _status = s; InvokeAsync(StateHasChanged); };
+
+        // Render PDF via PDF.js (see wwwroot/pdfViewer.js)
+        await JS.InvokeVoidAsync("pdfViewer.render",
+            $"/api/documents/{EnvelopeId}/pdf-stream");
+    }
+
+    private async Task StartSigning()
+    {
+        _status = "Reading smartcard certificateâ€¦";
+
+        // 1. Ask the native messaging host for the leaf certificate
+        var certB64 = await JS.InvokeAsync<string>("smartcardBridge.getCertificate");
+
+        // 2. Server prepares the PDF and returns the byte-range digest
+        _status = "Preparing documentâ€¦";
+        var session = await Api.PrepareAsync(EnvelopeId, certB64);
+        if (session is null) { _status = "Error: could not prepare document."; return; }
+
+        // 3. Send digest to smartcard for signing via native host
+        _status = "Waiting for PIN and smartcard signatureâ€¦";
+        var result = await JS.InvokeAsync<SignResult>(
+            "smartcardBridge.sign", session.DigestBase64, session.DigestAlgorithm);
+
+        // 4. Send CMS bytes back to server to finalize PAdES-B-LT
+        _status = "Embedding signatureâ€¦";
+        await Api.FinalizeAsync(session.Id, result.Pkcs7Base64, result.ChainBase64);
+        _status = "Signed successfully.";
+    }
+
+    record SignResult(string Pkcs7Base64, string[] ChainBase64);
+}

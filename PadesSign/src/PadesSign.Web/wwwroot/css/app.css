@@ -1,0 +1,13 @@
+﻿body { margin: 0; font-family: system-ui, sans-serif; }
+.layout { display: flex; }
+.sidebar { width: 180px; padding: 1rem; background: #f4f4f4; min-height: 100vh; }
+.sidebar a { display: block; margin-bottom: 0.5rem; text-decoration: none; color: #333; }
+main { flex: 1; padding: 1.5rem; }
+.sign-overlay {
+  position: absolute; cursor: pointer;
+  border: 2px dashed #0078d4; background: rgba(0,120,212,0.08);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; color: #0078d4;
+  /* positioned by JS based on field coordinates */
+  left: 60px; top: 120px; width: 180px; height: 60px;
+}

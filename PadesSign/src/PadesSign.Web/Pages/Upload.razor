@@ -1,0 +1,49 @@
+﻿@page "/upload"
+@inject SigningApiClient Api
+@inject NavigationManager Nav
+
+<h1>Upload document</h1>
+
+<select @bind="_templateId">
+    <option value="">â€” select workflow template â€”</option>
+    @foreach (var t in _templates)
+    { <option value="@t.Id">@t.Name</option> }
+</select>
+
+<InputFile OnChange="OnFileSelected" accept=".pdf" />
+
+@if (_uploading) { <p>Uploadingâ€¦</p> }
+
+@code {
+    private Guid     _templateId;
+    private byte[]?  _pdfBytes;
+    private string   _fileName = string.Empty;
+    private bool     _uploading;
+    private List<TemplateItem> _templates = new();
+
+    record TemplateItem(Guid Id, string Name);
+
+    protected override async Task OnInitializedAsync()
+    {
+        // TODO: load templates from API
+    }
+
+    private async Task OnFileSelected(InputFileChangeEventArgs e)
+    {
+        var file = e.File;
+        _fileName = file.Name;
+        using var ms = new MemoryStream();
+        await file.OpenReadStream(maxAllowedSize: 52_428_800).CopyToAsync(ms);
+        _pdfBytes = ms.ToArray();
+        await SubmitAsync();
+    }
+
+    private async Task SubmitAsync()
+    {
+        if (_pdfBytes is null || _templateId == Guid.Empty) return;
+        _uploading = true;
+        var result = await Api.UploadAsync(_templateId, _pdfBytes, _fileName);
+        if (result is not null) Nav.NavigateTo($"/sign/{result.EnvelopeId}");
+        _uploading = false;
+    }
+}
