@@ -1,4 +1,4 @@
-﻿// Communicates with the Chrome/Edge native messaging host (SmartcardHost).
+// Communicates with the Chrome/Edge native messaging host (SmartcardHost).
 // Requires the browser extension to be installed and the host registered.
 window.smartcardBridge = {
   _send: (msg) => new Promise((resolve, reject) => {

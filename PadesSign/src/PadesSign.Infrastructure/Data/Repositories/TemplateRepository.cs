@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using PadesSign.Application.Interfaces;
 using PadesSign.Domain.Entities;
 

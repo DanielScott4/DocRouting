@@ -1,4 +1,4 @@
-﻿using MediatR;
+using MediatR;
 using PadesSign.Application.Interfaces;
 using PadesSign.Domain.Entities;
 

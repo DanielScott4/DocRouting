@@ -1,4 +1,4 @@
-﻿using System.Security.Cryptography;
+using System.Security.Cryptography;
 using iText.Kernel.Pdf;
 using iText.Signatures;
 using Org.BouncyCastle.X509;

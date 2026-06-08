@@ -1,4 +1,4 @@
-﻿using System.Collections.Concurrent;
+using System.Collections.Concurrent;
 using PadesSign.Application.Interfaces;
 using PadesSign.Domain.Entities;
 

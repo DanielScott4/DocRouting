@@ -1,4 +1,4 @@
-﻿using PadesSign.Domain.Entities;
+using PadesSign.Domain.Entities;
 using PadesSign.Domain.Enums;
 
 namespace PadesSign.Application.Interfaces;

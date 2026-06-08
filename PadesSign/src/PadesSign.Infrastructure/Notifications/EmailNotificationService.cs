@@ -1,4 +1,4 @@
-﻿using PadesSign.Application.Interfaces;
+using PadesSign.Application.Interfaces;
 using PadesSign.Domain.Entities;
 using SendGrid;
 using SendGrid.Helpers.Mail;

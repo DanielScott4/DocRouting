@@ -1,4 +1,4 @@
-﻿using MediatR;
+using MediatR;
 using Org.BouncyCastle.X509;
 using PadesSign.Application.Interfaces;
 using PadesSign.Domain.Entities;

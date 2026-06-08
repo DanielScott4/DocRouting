@@ -1,4 +1,4 @@
-﻿namespace PadesSign.Application.Interfaces;
+namespace PadesSign.Application.Interfaces;
 
 public interface IBlobStorage
 {

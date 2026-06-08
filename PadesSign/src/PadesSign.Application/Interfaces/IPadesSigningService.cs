@@ -1,4 +1,4 @@
-﻿using Org.BouncyCastle.X509;
+using Org.BouncyCastle.X509;
 using PadesSign.Domain.Entities;
 using PadesSign.Domain.ValueObjects;
 

@@ -1,4 +1,4 @@
-﻿using PadesSign.Domain.ValueObjects;
+using PadesSign.Domain.ValueObjects;
 
 namespace PadesSign.Domain.Entities;
 

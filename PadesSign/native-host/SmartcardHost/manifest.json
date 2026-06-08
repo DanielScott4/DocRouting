@@ -1,4 +1,4 @@
-﻿{
+{
   "name": "com.yourorg.padessign",
   "description": "PadesSign smartcard native messaging host",
   "path": "SmartcardHost.exe",

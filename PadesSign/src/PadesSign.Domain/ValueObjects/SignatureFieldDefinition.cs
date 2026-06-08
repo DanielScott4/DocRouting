@@ -1,4 +1,4 @@
-﻿namespace PadesSign.Domain.ValueObjects;
+namespace PadesSign.Domain.ValueObjects;
 
 public sealed record SignatureFieldDefinition(
     int    PageNumber,

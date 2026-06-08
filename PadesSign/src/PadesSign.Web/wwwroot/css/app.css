@@ -1,4 +1,4 @@
-﻿body { margin: 0; font-family: system-ui, sans-serif; }
+body { margin: 0; font-family: system-ui, sans-serif; }
 .layout { display: flex; }
 .sidebar { width: 180px; padding: 1rem; background: #f4f4f4; min-height: 100vh; }
 .sidebar a { display: block; margin-bottom: 0.5rem; text-decoration: none; color: #333; }

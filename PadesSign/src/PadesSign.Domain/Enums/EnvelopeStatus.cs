@@ -1,4 +1,4 @@
-﻿namespace PadesSign.Domain.Enums;
+namespace PadesSign.Domain.Enums;
 
 public enum EnvelopeStatus
 {

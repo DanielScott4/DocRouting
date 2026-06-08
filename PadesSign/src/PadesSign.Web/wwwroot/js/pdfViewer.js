@@ -1,4 +1,4 @@
-﻿window.pdfViewer = {
+window.pdfViewer = {
   render: async (url) => {
     const pdfjsLib = window['pdfjs-dist/build/pdf'];
     pdfjsLib.GlobalWorkerOptions.workerSrc =

@@ -1,4 +1,4 @@
-﻿namespace PadesSign.Domain.Entities;
+namespace PadesSign.Domain.Entities;
 
 public class AuditEntry
 {

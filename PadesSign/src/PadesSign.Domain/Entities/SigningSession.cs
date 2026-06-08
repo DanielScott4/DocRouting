@@ -1,4 +1,4 @@
-﻿namespace PadesSign.Domain.Entities;
+namespace PadesSign.Domain.Entities;
 
 /// <summary>
 /// Short-lived server-side session created during the prepare step.

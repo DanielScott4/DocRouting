@@ -1,4 +1,4 @@
-﻿# PadesSign
+# PadesSign
 
 PAdES-B-LT compliant PDF electronic signature routing system built with .NET 8.
 
